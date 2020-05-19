@@ -1,0 +1,7 @@
+# depslib dependency file v1.0
+1589890416 source:c:\users\michi\desktop\software project\software-project---game-of-life\gameoflife\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<stdbool.h>
+
