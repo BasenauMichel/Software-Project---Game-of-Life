@@ -7,13 +7,20 @@
 	<windows.h>
 	<unistd.h>
 
-1591623749 source:c:\users\michi\desktop\gol\software-project---game-of-life\gameoflife\main.c
+1591639705 source:c:\users\michi\desktop\gol\software-project---game-of-life\gameoflife\main.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
 	<stdbool.h>
 	<windows.h>
 	<unistd.h>
+	"GoLLIB.h"
 
-1591624182 source:c:\users\michi\desktop\gol\software-project---game-of-life\gameoflife\gollib.c
+1591639787 source:c:\users\michi\desktop\gol\software-project---game-of-life\gameoflife\gollib.c
+	<stdio.h>
+	"GoLLIB.h"
+	<stdbool.h>
+
+1591639739 c:\users\michi\desktop\gol\software-project---game-of-life\gameoflife\gollib.h
+	<stdbool.h>
 
