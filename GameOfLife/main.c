@@ -10,7 +10,8 @@ int main()
     int yAxis;
     int i;
     int y;
-    char symbol;
+    char symbolLife;
+    char symbolDead;
     int rndm;
     int percentage;
     int counter;
@@ -18,8 +19,11 @@ int main()
 
     srand(time(NULL));
 
-    printf("Enter symbol:");
-    scanf("%c", &symbol);
+    printf("Enter symbol for living cells:");
+    scanf("%c", &symbolLife);
+    fflush(stdin);
+    printf("Enter symbol for dead cells:");
+    scanf("%c", &symbolDead);
     printf("Enter x-axis value:");
     scanf("%d", &xAxis);
     printf("Enter y-axis value:");
@@ -59,11 +63,11 @@ int main()
         {
             if(area[i][y] == true)
             {
-                printf("%c",symbol);
+                printf("%c",symbolLife);
             }
             else
             {
-                printf(" ");
+                printf("%c",symbolDead);
             }
         }
         printf("\n");
@@ -155,11 +159,11 @@ while(1){
         {
             if(area[i][y] == true)
             {
-                printf("%c",symbol);
+                printf("%c",symbolLife);
             }
             else
             {
-                printf(" ");
+                printf("%c",symbolDead);
             }
         }
         printf("\n");

@@ -1,0 +1,6 @@
+#ifndef GOLLIB_H_INCLUDED
+#define GOLLIB_H_INCLUDED
+
+
+
+#endif // GOLLIB_H_INCLUDED
