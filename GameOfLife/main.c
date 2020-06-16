@@ -21,11 +21,11 @@ int main()
 
     bool tempArea[xAxis][yAxis];
     bool area[xAxis][yAxis];
-    SetAndPrintRndmCells(&area, percentage, yAxis, xAxis, symbolDead, symbolLife);
+    SetAndPrintRndmCells(area, percentage, yAxis, xAxis, symbolDead, symbolLife);
 
     if (mode == 1)
     {
-        PrintAutomatically(&tempArea, &area, yAxis, xAxis, symbolLife, symbolDead);
+        PrintAutomatically(tempArea, area, yAxis, xAxis, symbolLife, symbolDead);
     }
 
 

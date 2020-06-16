@@ -20,7 +20,7 @@ void GetSettings(int *xAxis, int *yAxis, char *symbolLife, char *symbolDead, int
     system("cls");
 }
 
-void SetAndPrintRndmCells(bool *area[], int percentage, int yAxis, int xAxis, char symbolDead, char symbolLife)
+void SetAndPrintRndmCells(bool **area, int percentage, int yAxis, int xAxis, char symbolDead, char symbolLife)
 {
     int i;
     int y;
@@ -50,7 +50,7 @@ void SetAndPrintRndmCells(bool *area[], int percentage, int yAxis, int xAxis, ch
 }
 
 
-void SetIteration(bool *tempArea[], bool *area[], int yAxis, int xAxis)
+void SetIteration(bool **tempArea, bool **area, int yAxis, int xAxis)
 {
     int counter;
     int i;
@@ -125,7 +125,7 @@ void SetIteration(bool *tempArea[], bool *area[], int yAxis, int xAxis)
     }
 
 
-void PrintIteration(bool *area[], int yAxis, int xAxis, char symbolLife, char symbolDead)
+void PrintIteration(bool **area, int yAxis, int xAxis, char symbolLife, char symbolDead)
 {
     int i;
     int y;
@@ -146,7 +146,7 @@ void PrintIteration(bool *area[], int yAxis, int xAxis, char symbolLife, char sy
         printf("\n");
     }
 }
-void WriteTempAreaIntoArea(bool *tempArea[], bool *area[], int yAxis, int xAxis)
+void WriteTempAreaIntoArea(bool **tempArea, bool **area, int yAxis, int xAxis)
 {
     int i;
     int y;
@@ -158,13 +158,13 @@ void WriteTempAreaIntoArea(bool *tempArea[], bool *area[], int yAxis, int xAxis)
         }
     }
 }
-void PrintAutomatically(bool *tempArea[], bool *area[], int yAxis, int xAxis, char symbolLife, char symbolDead)
+void PrintAutomatically(bool **tempArea, bool **area, int yAxis, int xAxis, char symbolLife, char symbolDead)
 {
     while(1)
     {
-     SetIteration(&tempArea, &area, yAxis, xAxis);
-     WriteTempAreaIntoArea(&tempArea, &area, yAxis, xAxis);
-     PrintIteration(&area, yAxis, xAxis, symbolLife, symbolDead);
+     SetIteration(tempArea, area, yAxis, xAxis);
+     WriteTempAreaIntoArea(tempArea, area, yAxis, xAxis);
+     PrintIteration(area, yAxis, xAxis, symbolLife, symbolDead);
      system("cls");
     }
 }
