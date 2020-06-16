@@ -1,6 +1,8 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "GoLLIB.h"
 #include <stdbool.h>
+#include <time.h>
 
 void GetSettings(int *xAxis, int *yAxis, char *symbolLife, char *symbolDead, int *percentage, int *mode)
 {
@@ -20,7 +22,7 @@ void GetSettings(int *xAxis, int *yAxis, char *symbolLife, char *symbolDead, int
     system("cls");
 }
 
-void SetAndPrintRndmCells(bool **area, int percentage, int yAxis, int xAxis, char symbolDead, char symbolLife)
+void SetAndPrintRndmCells(int percentage, int yAxis, bool area[][yAxis], int xAxis, char symbolDead, char symbolLife)
 {
     int i;
     int y;
@@ -36,21 +38,19 @@ void SetAndPrintRndmCells(bool **area, int percentage, int yAxis, int xAxis, cha
             if(rndm <= percentage)
             {
                 area[i][y] = true;
-                printf("%c", symbolLife);
 
             }
             else
             {
                 area[i][y] = false;
-                printf("%c",symbolDead);
             }
         }
-        printf("\n");
     }
+    PrintIteration(yAxis, area, xAxis, symbolLife, symbolDead);
 }
 
 
-void SetIteration(bool **tempArea, bool **area, int yAxis, int xAxis)
+void SetIteration(int yAxis, bool tempArea[][yAxis], bool area[][yAxis], int xAxis)
 {
     int counter;
     int i;
@@ -125,7 +125,7 @@ void SetIteration(bool **tempArea, bool **area, int yAxis, int xAxis)
     }
 
 
-void PrintIteration(bool **area, int yAxis, int xAxis, char symbolLife, char symbolDead)
+void PrintIteration(int yAxis, bool area[][yAxis], int xAxis, char symbolLife, char symbolDead)
 {
     int i;
     int y;
@@ -146,7 +146,7 @@ void PrintIteration(bool **area, int yAxis, int xAxis, char symbolLife, char sym
         printf("\n");
     }
 }
-void WriteTempAreaIntoArea(bool **tempArea, bool **area, int yAxis, int xAxis)
+void WriteTempAreaIntoArea(int yAxis, bool tempArea[][yAxis], bool area[][yAxis], int xAxis)
 {
     int i;
     int y;
@@ -158,13 +158,13 @@ void WriteTempAreaIntoArea(bool **tempArea, bool **area, int yAxis, int xAxis)
         }
     }
 }
-void PrintAutomatically(bool **tempArea, bool **area, int yAxis, int xAxis, char symbolLife, char symbolDead)
+void PrintAutomatically(int yAxis, bool tempArea[][yAxis], bool area[][yAxis], int xAxis, char symbolLife, char symbolDead)
 {
     while(1)
     {
-     SetIteration(tempArea, area, yAxis, xAxis);
-     WriteTempAreaIntoArea(tempArea, area, yAxis, xAxis);
-     PrintIteration(area, yAxis, xAxis, symbolLife, symbolDead);
+     SetIteration(yAxis, tempArea, area, xAxis);
+     WriteTempAreaIntoArea(yAxis, tempArea, area, xAxis);
+     PrintIteration(yAxis, area, xAxis, symbolLife, symbolDead);
      system("cls");
     }
 }

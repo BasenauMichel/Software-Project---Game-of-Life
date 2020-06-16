@@ -5,16 +5,14 @@
 #include <windows.h>
 #include <unistd.h>
 #include "GoLLIB.h"
+#include <time.h>
 int main()
 {
     int xAxis;
     int yAxis;
-    int i;
-    int y;
     char symbolLife;
     char symbolDead;
     int percentage;
-    int counter;
     int mode;
 
     GetSettings(&xAxis, &yAxis, &symbolLife, &symbolDead, &percentage, &mode);
@@ -23,11 +21,11 @@ int main()
     bool area[xAxis][yAxis];
     SetAndPrintRndmCells(area, percentage, yAxis, xAxis, symbolDead, symbolLife);
 
-    if (mode == 1)
+    /*if (mode == 1)
     {
         PrintAutomatically(tempArea, area, yAxis, xAxis, symbolLife, symbolDead);
     }
-
+*/
 
 
 
