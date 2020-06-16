@@ -33,7 +33,7 @@ void SetAndPrintRndmCells(int percentage, int yAxis, bool area[][yAxis], int xAx
     int y;
     int rndm;
     srand(time(NULL));
-
+    printf("First Iteration:\n");
     for(i=0; i<yAxis; i++)
     {
         for(y=0; y<xAxis; y++)
@@ -170,17 +170,23 @@ bool WriteTempAreaIntoArea(int yAxis, bool tempArea[][yAxis], bool area[][yAxis]
     }
     return(arrayEven);
 }
-void PrintAutomatically(int yAxis, bool tempArea[][yAxis], bool area[][yAxis], int xAxis, char symbolLife, char symbolDead, int mSeconds)
+void PrintAutomatically(int yAxis, bool tempArea[][yAxis], bool area[][yAxis], int xAxis, char symbolLife, char symbolDead, int mSeconds, bool automatic)
 {
     int iterationNo;
     double clockBefore;
     double clockAfter;
 
     clockBefore = clock()/CLOCKS_PER_SEC;
-    iterationNo = 1;
+    iterationNo = 2;
     while(1)
     {
-        Sleep(mSeconds);
+        if (automatic){
+            //Sleep(mSeconds);
+        }
+        else
+        {
+            system("pause");
+        }
         system("cls");
         SetIteration(yAxis, tempArea, area, xAxis);
         if (WriteTempAreaIntoArea(yAxis, tempArea, area, xAxis))
@@ -193,20 +199,7 @@ void PrintAutomatically(int yAxis, bool tempArea[][yAxis], bool area[][yAxis], i
         iterationNo++;
     }
 }
-void PrintManually(int yAxis, bool tempArea[][yAxis], bool area[][yAxis], int xAxis, char symbolLife, char symbolDead)
-{
-    while(1)
-    {
-        system("pause");
-        system("cls");
-        SetIteration(yAxis, tempArea, area, xAxis);
-        if (WriteTempAreaIntoArea(yAxis, tempArea, area, xAxis))
-        {
-            break;
-        }
-        PrintIteration(yAxis, area, xAxis, symbolLife, symbolDead);
-    }
-}
+
 
 void PrintIterationPerSecond(double startTime, double endTime, int noOfIterations)
 {
