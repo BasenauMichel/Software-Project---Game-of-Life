@@ -14,22 +14,24 @@ int main()
     char symbolDead;
     int percentage;
     int mode;
+    int mSeconds;
+    int neighbour;
 
-    GetSettings(&xAxis, &yAxis, &symbolLife, &symbolDead, &percentage, &mode);
+    GetSettings(&xAxis, &yAxis, &symbolLife, &symbolDead, &percentage, &mode, &mSeconds);
+    mSeconds = mSeconds * 1000;
 
     bool tempArea[xAxis][yAxis];
     bool area[xAxis][yAxis];
-    SetAndPrintRndmCells(area, percentage, yAxis, xAxis, symbolDead, symbolLife);
+    SetAndPrintRndmCells(percentage, yAxis, area, xAxis, symbolDead, symbolLife);
 
-    /*if (mode == 1)
+    if (mode == 1)
     {
-        PrintAutomatically(tempArea, area, yAxis, xAxis, symbolLife, symbolDead);
+        PrintAutomatically(yAxis, tempArea, area, xAxis, symbolLife, symbolDead, mSeconds);
     }
-*/
-
-
-
-
+    else
+    {
+     PrintManually(yAxis, tempArea, area, xAxis, symbolLife, symbolDead);
+    }
     return 0;
 }
 
