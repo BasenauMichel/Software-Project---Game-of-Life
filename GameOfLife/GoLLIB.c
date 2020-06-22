@@ -4,8 +4,9 @@
 #include <stdbool.h>
 #include <time.h>
 
-void GetSettings(int *xAxis, int *yAxis, char *symbolLife, char *symbolDead, int *percentage, int *mode, int *mSeconds)
+void GetSettings(int *xAxis, int *yAxis, char *symbolLife, char *symbolDead, int *percentage, int *mode, int *mSeconds, int *dieTill, int *dieFrom, int *giveBirthAt)
 {
+    int changeRule;
     printf("Enter symbol for living cells:");
     scanf("%c", symbolLife);
     fflush(stdin);
@@ -23,6 +24,23 @@ void GetSettings(int *xAxis, int *yAxis, char *symbolLife, char *symbolDead, int
     {
         printf("Seconds between Iterations:");
         scanf("%d", mSeconds);
+    }
+    printf("1 to Change Rules:");
+    scanf("%d", &changeRule);
+    if (changeRule == 1)
+    {
+        printf("Cells die, if number of neighbors more than:");
+        scanf("%d", dieFrom);
+        printf("Cells die, if number of neighbors less than:");
+        scanf("%d", dieTill);
+        printf("New cells are born if number of living neighbors is:");
+        scanf("%d", giveBirthAt);
+    }
+    else
+    {
+        dieFrom = 2;
+        dieTill = 3;
+        giveBirthAt = 3;
     }
     system("cls");
 }
@@ -55,7 +73,7 @@ void SetAndPrintRndmCells(int percentage, int yAxis, bool area[][yAxis], int xAx
 }
 
 
-void SetIteration(int yAxis, bool tempArea[][yAxis], bool area[][yAxis], int xAxis)
+void SetIteration(int yAxis, bool tempArea[][yAxis], bool area[][yAxis], int xAxis, int dieTill, int dieFrom, int giveBirthAt)
 {
     int counter;
     int i;
@@ -102,7 +120,7 @@ void SetIteration(int yAxis, bool tempArea[][yAxis], bool area[][yAxis], int xAx
 
             if(area[i][y] == true)
             {
-                if(counter > 3 || counter < 2)
+                if(counter > dieTill || counter < dieFrom)
                 {
                     tempArea[i][y] = false;
                 }
@@ -114,7 +132,7 @@ void SetIteration(int yAxis, bool tempArea[][yAxis], bool area[][yAxis], int xAx
             }
             else
             {
-                if(counter == 3)
+                if(counter == giveBirthAt)
                 {
                     tempArea[i][y] = true;
                 }
@@ -170,7 +188,7 @@ bool WriteTempAreaIntoArea(int yAxis, bool tempArea[][yAxis], bool area[][yAxis]
     }
     return(arrayEven);
 }
-void PrintAutomatically(int yAxis, bool tempArea[][yAxis], bool area[][yAxis], int xAxis, char symbolLife, char symbolDead, int mSeconds, bool automatic)
+void PrintCells(int yAxis, bool tempArea[][yAxis], bool area[][yAxis], int xAxis, char symbolLife, char symbolDead, int mSeconds, bool automatic, int dieTill, int dieFrom, int giveBirthAt)
 {
     int iterationNo;
     double clockBefore;
@@ -180,19 +198,20 @@ void PrintAutomatically(int yAxis, bool tempArea[][yAxis], bool area[][yAxis], i
     iterationNo = 2;
     while(1)
     {
-        if (automatic){
+        if (automatic)
+        {
             //Sleep(mSeconds);
         }
         else
         {
             system("pause");
         }
-        system("cls");
-        SetIteration(yAxis, tempArea, area, xAxis);
+        SetIteration(yAxis, tempArea, area, xAxis, dieTill, dieFrom, giveBirthAt);
         if (WriteTempAreaIntoArea(yAxis, tempArea, area, xAxis))
         {
             break;
         }
+        system("cls");
         clockAfter = clock()/CLOCKS_PER_SEC;
         PrintIterationPerSecond(clockBefore, clockAfter, iterationNo);
         PrintIteration(yAxis, area, xAxis, symbolLife, symbolDead);

@@ -16,12 +16,11 @@ int main()
     int percentage;
     int mode;
     int mSeconds;
-    int neighbour;
-    int GiveBirthIfMoreThan;
-    int GiveBirthIfLessThan;
-    int deadIfLessThan;
+    int dieTill;
+    int dieFrom;
+    int giveBirthAt;
 
-    GetSettings(&xAxis, &yAxis, &symbolLife, &symbolDead, &percentage, &mode, &mSeconds);
+    GetSettings(&xAxis, &yAxis, &symbolLife, &symbolDead, &percentage, &mode, &mSeconds, &dieTill, &dieFrom, &giveBirthAt);
     mSeconds = mSeconds * 1000;
 
     bool tempArea[xAxis][yAxis];
@@ -30,11 +29,11 @@ int main()
 
     if (mode == 1)
     {
-        PrintAutomatically(yAxis, tempArea, area, xAxis, symbolLife, symbolDead, mSeconds, true);
+        PrintCells(yAxis, tempArea, area, xAxis, symbolLife, symbolDead, mSeconds, true, dieTill, dieFrom, giveBirthAt);
     }
     else
     {
-     PrintAutomatically(yAxis, tempArea, area, xAxis, symbolLife, symbolDead, 0, false);
+     PrintCells(yAxis, tempArea, area, xAxis, symbolLife, symbolDead, 0, false, dieTill, dieFrom, giveBirthAt);
     }
     return 0;
 }
