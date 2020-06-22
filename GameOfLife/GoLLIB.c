@@ -4,22 +4,30 @@
 #include <stdbool.h>
 #include <time.h>
 
-void GetSettings(int *xAxis, int *yAxis, char *symbolLife, char *symbolDead, int *percentage, int *mode, int *mSeconds, int *dieTill, int *dieFrom, int *giveBirthAt)
+void GetSettings(int *xAxis, int *yAxis, char *symbolLife, char *symbolDead, int *percentage, int *mode, int *mSeconds, int *dieTill, int *dieFrom, int *giveBirthAt,int *import)
 {
+    //Input of the settings
     int changeRule;
     printf("Enter symbol for living cells:");
     scanf("%c", symbolLife);
     fflush(stdin);
     printf("Enter symbol for dead cells:");
     scanf("%c", symbolDead);
-    printf("Enter x-axis value:");
-    scanf("%d", xAxis);
-    printf("Enter y-axis value:");
-    scanf("%d", yAxis);
-    printf("Enter percentage:");
-    scanf("%d", percentage);
+    printf("1 if you wish to import from a .txt file?");
+    scanf("%d",&import);
+    if(import != 1)
+    {
+        printf("Enter x-axis value:");
+        scanf("%d", xAxis);
+        printf("Enter y-axis value:");
+        scanf("%d", yAxis);
+        printf("Enter percentage:");
+        scanf("%d", percentage);
+    }
+
     printf("1 for automatic mode:");
     scanf("%d", mode);
+
     if(*mode == 1)
     {
         printf("Seconds between Iterations:");
@@ -38,15 +46,16 @@ void GetSettings(int *xAxis, int *yAxis, char *symbolLife, char *symbolDead, int
     }
     else
     {
-        dieFrom = 2;
-        dieTill = 3;
-        giveBirthAt = 3;
+        *dieFrom = 2;
+        *dieTill = 3;
+        *giveBirthAt = 3;
     }
     system("cls");
 }
 
 void SetAndPrintRndmCells(int percentage, int yAxis, bool area[][yAxis], int xAxis, char symbolDead, char symbolLife)
 {
+    //Sets the random values
     int i;
     int y;
     int rndm;
@@ -69,6 +78,7 @@ void SetAndPrintRndmCells(int percentage, int yAxis, bool area[][yAxis], int xAx
             }
         }
     }
+    //Call function to print the area
     PrintIteration(yAxis, area, xAxis, symbolLife, symbolDead);
 }
 
@@ -79,6 +89,7 @@ void SetIteration(int yAxis, bool tempArea[][yAxis], bool area[][yAxis], int xAx
     int i;
     int y;
 
+    //Counts numbers of neighboured living cells
     for(i=0; i<yAxis; i++)
     {
         for(y=0; y<xAxis; y++)
@@ -118,6 +129,7 @@ void SetIteration(int yAxis, bool tempArea[][yAxis], bool area[][yAxis], int xAx
                 counter +=1;
             }
 
+            //Applys the rules
             if(area[i][y] == true)
             {
                 if(counter > dieTill || counter < dieFrom)
@@ -152,7 +164,7 @@ void PrintIteration(int yAxis, bool area[][yAxis], int xAxis, char symbolLife, c
 {
     int i;
     int y;
-
+    //Prints the iteration
     for(i=0; i<yAxis; i++)
     {
         for(y=0; y<xAxis; y++)
@@ -175,6 +187,8 @@ bool WriteTempAreaIntoArea(int yAxis, bool tempArea[][yAxis], bool area[][yAxis]
     int y;
     bool arrayEven;
     arrayEven = true;
+
+    //Reads each value from the temporary array and writes it in the area
     for(i=0; i<yAxis; i++)
     {
         for(y=0; y<xAxis; y++)
@@ -193,9 +207,11 @@ void PrintCells(int yAxis, bool tempArea[][yAxis], bool area[][yAxis], int xAxis
     int iterationNo;
     double clockBefore;
     double clockAfter;
+    int exportfile;
 
     clockBefore = clock()/CLOCKS_PER_SEC;
     iterationNo = 2;
+
     while(1)
     {
         if (automatic)
@@ -204,7 +220,13 @@ void PrintCells(int yAxis, bool tempArea[][yAxis], bool area[][yAxis], int xAxis
         }
         else
         {
+            printf("Press 1 to export current state of cells to .txt file: ");
+            scanf("%d", &exportfile);
             system("pause");
+            if(exportfile == 1)
+            {
+                ExportCurrentState(yAxis, xAxis, area, symbolLife, symbolDead);
+            }
         }
         SetIteration(yAxis, tempArea, area, xAxis, dieTill, dieFrom, giveBirthAt);
         if (WriteTempAreaIntoArea(yAxis, tempArea, area, xAxis))
@@ -228,4 +250,104 @@ void PrintIterationPerSecond(double startTime, double endTime, int noOfIteration
     iterationPerSecond = clockDifference/noOfIterations;
     printf("Iterations per second: %f\n", iterationPerSecond);
     printf("Iteration No.: %d\n", noOfIterations);
+}
+
+
+void ExportCurrentState(int yAxis,int xAxis,bool area[][yAxis],char symbolLife, char symbolDead)
+{
+    int i = 0;
+    int y = 0;
+
+
+    FILE * fPtr;
+    fPtr = fopen("saved/area.txt","w");
+
+    if(fPtr == NULL)
+    {
+        printf("Unable to create file.\n");
+        exit(EXIT_FAILURE);
+    }
+
+    for(i=0; i<yAxis; i++)
+    {
+        for(y=0; y<xAxis; y++)
+        {
+            if(area[i][y] == true)
+            {
+                fputs("1", fPtr);
+
+            }
+            else
+            {
+                fputs("0", fPtr);
+            }
+        }
+
+        fputs("\n", fPtr);
+    }
+
+    fclose(fPtr);
+
+}
+
+void CountRowsAndColumns(int *yAxis, int *xAxis)
+{
+    yAxis = 0;
+    xAxis = 0;
+    int cols;
+    FILE *file = fopen("saved/area.txt", "r");
+    char c;
+
+    do
+    {
+        c = fgetc(file);
+        if(c == '\n')
+        {
+            yAxis++;
+            xAxis = cols;
+            cols= 0;
+        }
+        else
+        {
+            cols ++;
+        }
+    }
+    while (c != EOF);
+
+    fclose(file);
+}
+
+void ImportArea(int yAxis,int xAxis,bool area[][yAxis])
+{
+    int i,y;
+    char ch;
+    FILE *file = fopen("saved/area.txt", "r");
+    size_t n = 0;
+    char c;
+    if (file == NULL)
+    {
+        return NULL;
+    }
+    fseek(file, 0, SEEK_END);
+    fseek(file, 0, SEEK_SET);
+
+    while ((c = fgetc(file)) != EOF)
+    {
+        for(i=0; i<yAxis; i++)
+        {
+            for(y=0; y<xAxis; y++)
+            {
+                if(c == "1")
+                {
+                    area[i][y]= true;
+                }
+                else
+                {
+                    area[i][y]= false;
+                }
+            }
+        }
+    }
+
+    fclose(file);
 }

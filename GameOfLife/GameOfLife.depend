@@ -27,3 +27,23 @@
 1592835098 c:\users\michi\desktop\gol\software-project---game-of-life\gameoflife\gollib.h
 	<stdbool.h>
 
+1592847645 source:c:\users\moh\desktop\programmieren\game of life\software-project---game-of-life\gameoflife\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<stdbool.h>
+	<windows.h>
+	<unistd.h>
+	"GoLLIB.h"
+	<time.h>
+
+1592847608 c:\users\moh\desktop\programmieren\game of life\software-project---game-of-life\gameoflife\gollib.h
+	<stdbool.h>
+
+1592847613 source:c:\users\moh\desktop\programmieren\game of life\software-project---game-of-life\gameoflife\gollib.c
+	<stdio.h>
+	<stdlib.h>
+	"GoLLIB.h"
+	<stdbool.h>
+	<time.h>
+
